@@ -6,7 +6,6 @@ groups:
   - promote-new-version
 
 resources:
-
 - name: demo-repo
   type: git
   source:
