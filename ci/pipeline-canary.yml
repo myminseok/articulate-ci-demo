@@ -1,0 +1,112 @@
+groups:
+- name: main
+  jobs:
+  - build-test
+  - deploy-new-app
+  - promote-new-version-canary
+
+resources:
+
+- name: demo-repo
+  type: git
+  source:
+    branch: master
+    uri: git@github.com:myminseok/articulate.git
+    private_key: {{github-private-key}}
+  check_every: 10s # for demo
+- name: demo-out-repo
+  type: git
+  source:
+    branch: master
+    uri: git@github.com:myminseok/articulate.git
+    private_key: {{github-private-key}}
+- name: PCF
+  type: cf
+  source:
+    api: {{pws-api}}
+    organization: {{pws-organization}}
+    username: {{deploy-username}}
+    password: {{deploy-password}}
+    skip_cert_check: true
+    space: {{pws-space}}
+- name: CVE-check
+  type: docker-image
+  source:
+    repository: java
+
+jobs:
+- name: build-test
+  serial: true
+  public: true
+  plan:
+  - get: demo-repo
+    trigger: true
+  - get: demo-out-repo
+    trigger: false
+  - get: CVE-check
+  - task: build-test
+    file: demo-out-repo/ci/tasks/build-test.yml
+    params:
+      BUILD_JAR_NAME: demo-canary.jar
+  - put: demo-out-repo
+    params:
+      repository: out-repo
+      rebase: true
+      force: true
+- name: deploy-new-app
+  serial: true
+  public: true
+  plan:
+  - get: demo-repo
+    trigger: true  
+    passed:
+      - build-test
+  - task: get-current-app-info
+    file: demo-repo/ci/tasks/current-app-get-info-canary.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}
+
+  - task: prepare-app-manifest-canary
+    file: demo-repo/ci/tasks/app-manifest-prep-canary.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+  - put: PCF
+    params:
+      manifest: output/manifest.yml
+      path: output/demo-canary.jar
+
+- name: promote-new-version-canary
+  serial: true
+  public: true
+  plan:
+  - get: demo-repo
+    trigger: false
+    passed:
+      - deploy-new-app
+  - task: get-current-app-info-canary
+    file: demo-repo/ci/tasks/current-app-get-info-canary.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}
+ 
+
+  - task: switch-app-routes
+    file: demo-repo/ci/tasks/update-routes-canary.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_APP_DOMAIN: {{pws-app-domain}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}
+

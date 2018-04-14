@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: myminseok/java8_git_mvn
+    tag: v1
+
+inputs:
+- name: demo-out-repo
+
+outputs:
+- name: out-repo
+
+run:
+  path: /bin/bash
+  args: 
+    - demo-out-repo/ci/tasks/build-test

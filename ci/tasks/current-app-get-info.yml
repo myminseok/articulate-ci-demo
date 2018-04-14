@@ -1,0 +1,17 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pivotalservices/docker-concourse-cf-tools
+    tag: "latest"
+
+inputs:
+- name: demo-out-repo
+
+outputs:
+- name: current-app-info
+
+run:
+  path: demo-out-repo/ci/tasks/current-app-get-info

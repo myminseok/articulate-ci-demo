@@ -1,0 +1,10 @@
+---
+applications:
+- name: APPNAME
+  memory: 1G 
+  instances: 1
+  buildpack: java_buildpack_offline 
+  env:
+      JAVA_OPTS: -Djava.security.egd=file:///dev/urandom
+  
+

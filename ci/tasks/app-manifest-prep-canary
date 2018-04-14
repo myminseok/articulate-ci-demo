@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -xe
+
+sed "s/APPNAME/canary-staging-$PWS_APP_SUFFIX/" ./demo-repo/manifests/manifest.yml > ./output/manifest.yml
+
+cat ./output/manifest.yml
+
+mv ./demo-repo/output/* ./output
+
