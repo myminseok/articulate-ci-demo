@@ -6,7 +6,6 @@ groups:
   - promote-new-version-canary
 
 resources:
-
 - name: demo-repo
   type: git
   source:
@@ -21,7 +20,7 @@ resources:
     uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
     disable_ci_skip: true
-    
+
   check_every: 10s # for demo
 - name: PCF
   type: cf
