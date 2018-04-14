@@ -52,6 +52,7 @@ jobs:
       repository: out-repo
       rebase: true
       force: true
+      
 - name: deploy-new-app
   serial: true
   public: true
