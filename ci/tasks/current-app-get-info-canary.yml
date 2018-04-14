@@ -8,7 +8,7 @@ image_resource:
     tag: "latest"
 
 inputs:
-- name: demo-repo
+- name: demo-out-repo
 
 outputs:
 - name: current-app-info
