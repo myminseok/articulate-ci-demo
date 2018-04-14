@@ -33,7 +33,6 @@ resources:
   type: docker-image
   source:
     repository: java
-
 jobs:
 - name: build-test
   serial: true
