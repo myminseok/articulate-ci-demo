@@ -20,6 +20,9 @@ resources:
     branch: master
     uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
+    disable_ci_skip: true
+    
+  check_every: 10s # for demo
 - name: PCF
   type: cf
   source:
@@ -52,7 +55,7 @@ jobs:
       repository: out-repo
       rebase: true
       force: true
-      
+
 - name: deploy-new-app
   serial: true
   public: true
