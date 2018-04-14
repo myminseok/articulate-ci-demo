@@ -13,6 +13,7 @@ resources:
     uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
+
 - name: demo-out-repo
   type: git
   source:
@@ -20,8 +21,8 @@ resources:
     uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
     disable_ci_skip: true
-
   check_every: 10s # for demo
+
 - name: PCF
   type: cf
   source:
@@ -31,10 +32,12 @@ resources:
     password: {{deploy-password}}
     skip_cert_check: true
     space: {{pws-space}}
+
 - name: CVE-check
   type: docker-image
   source:
     repository: java
+    
 jobs:
 - name: build-test
   serial: true
