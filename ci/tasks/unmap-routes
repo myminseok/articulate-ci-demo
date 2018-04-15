@@ -17,7 +17,6 @@ cf apps
 cf routes
 
 
-
 export PWS_DOMAIN_NAME=$PWS_APP_DOMAIN
 export MAIN_ROUTE_HOSTNAME=main-$PWS_APP_SUFFIX
 
