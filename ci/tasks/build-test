@@ -6,14 +6,14 @@ set -xe
 mkdir -p /root/.m2/repository
 cp -r /app/m2/* /root/.m2/repository/
 
-cd demo-out-repo
+cd source-repo
 ./mvnw clean package
 #./mvnw -Dmaven.repo.local=/app/m2 clean package
 
 cd ../out-repo
 shopt -s dotglob
 
-mv -f ../demo-out-repo/* ./
+mv -f ../source-repo/* ./
 ls -al ./target
 mkdir -p output
 mv ./target/*.jar ./output/"$BUILD_JAR_NAME"
