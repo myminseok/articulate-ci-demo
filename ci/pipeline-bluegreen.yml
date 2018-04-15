@@ -12,7 +12,7 @@ resources:
   type: git
   source:
     branch: master
-    uri: git@github.com:myminseok/articulate.git
+    uri: git@github.com/Pivotal-Field-Engineering/pcf-ers-demo.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 
