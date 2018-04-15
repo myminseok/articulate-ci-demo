@@ -12,6 +12,7 @@ cd source-repo
 
 cd ../out-repo
 shopt -s dotglob
+# to move .git metadata
 mv -f ../demo-out-repo/* ./
 
 mkdir -p target
@@ -21,7 +22,7 @@ ls -al ./target
 mkdir -p output
 cp ./target/*.jar ./output/"$BUILD_JAR_NAME"
 ls -al ./output
-echo "test" > ./output/aa
+
 
 
 git config --global user.email "${git-email}"
