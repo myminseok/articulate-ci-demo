@@ -14,7 +14,7 @@ cd ../out-repo
 shopt -s dotglob
 
 #mv -f ../source-repo/* ./
-ls -al ./target
+#ls -al ./target
 
 mkdir -p output
 cp ../source-repo/target/*.jar ./output/"$BUILD_JAR_NAME"
