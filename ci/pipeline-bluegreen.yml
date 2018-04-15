@@ -1,7 +1,7 @@
 groups:
 - name: main
   jobs:
-  - build-test
+  - build
   - deploy-new-app
   - blue-green-update
   - unmap-route
@@ -45,7 +45,7 @@ resources:
 
 
 jobs:
-- name: build-test
+- name: build
   serial: true
   public: true
   plan:
@@ -70,7 +70,7 @@ jobs:
   - get: demo-out-repo
     trigger: true  
     passed:
-      - build-test
+      - build
   - task: get-current-app-color
     file: demo-out-repo/ci/tasks/current-app-get-info.yml
     params:
@@ -127,7 +127,7 @@ jobs:
   - get: demo-out-repo
     trigger: true
     passed:
-      - blue-green-route
+      - blue-green-update
   - task: get-current-app-color
     file: demo-out-repo/ci/tasks/current-app-get-info.yml
     params:
