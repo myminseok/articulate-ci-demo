@@ -13,7 +13,7 @@ cf apps
 
 set +e
 
-main_green_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_DOMAIN_PREFIX" | grep "green" | grep -v "staging" | wc -l)
+main_green_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_DOMAIN_PREFIX" | grep "green" | grep -v "\-staging" | wc -l)
 if [ $main_green_app_exist -gt 0 ]
 then
   echo "green" > ./current-app-info/current-app.txt
@@ -23,11 +23,11 @@ else
   echo "green-staging" > ./current-app-info/next-app.txt
 fi
 
-main_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_DOMAIN_PREFIX" | grep -v "staging" | wc -l)
+main_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_DOMAIN_PREFIX" | grep -v "\-staging" | wc -l)
 main_instance_count=1
 if [ $main_app_exist -gt 0 ]
 then
- main_instance_count=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_DOMAIN_PREFIX" | grep -v "staging" | awk -F"/" '{print $2} ' |awk '{print $1}') 
+ main_instance_count=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_DOMAIN_PREFIX" | grep -v "\-staging" | awk -F"/" '{print $2} ' |awk '{print $1}') 
 fi
 echo $main_instance_count > ./current-app-info/next-app-instance-count.txt
 
