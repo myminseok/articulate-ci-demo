@@ -4,7 +4,7 @@ set -xe
 
 cat ./current-app-info/current-app.txt
 
-sed "s/APPNAME/$(cat ./current-app-info/next-app.txt)-$PWS_APP_SUFFIX/" ./demo-out-repo/manifests/manifest.yml > ./output/manifest.yml
+sed "s/APPNAME/$PWS_APP_SUFFIX-$(cat ./current-app-info/next-app.txt)/" ./demo-out-repo/manifests/manifest.yml > ./output/manifest.yml
 
 cat ./output/manifest.yml
 
