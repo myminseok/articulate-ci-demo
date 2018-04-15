@@ -13,11 +13,12 @@ cd source-repo
 cd ../out-repo
 shopt -s dotglob
 
-mv -f ../source-repo/* ./
+#mv -f ../source-repo/* ./
 ls -al ./target
+
 mkdir -p output
-mv ./target/*.jar ./output/"$BUILD_JAR_NAME"
-touch ./output/"$BUILD_JAR_NAME"
+cp ../source-repo/target/*.jar ./output/"$BUILD_JAR_NAME"
+#mv ./target/*.jar ./output/"$BUILD_JAR_NAME"
 
 git config --global user.email "${git-email}"
 git config --global user.name "${git-name}"
