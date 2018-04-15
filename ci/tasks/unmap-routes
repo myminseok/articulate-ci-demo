@@ -27,7 +27,7 @@ export NEXT_APP_COLOR_STRIPTED=$( echo "$NEXT_APP_COLOR" | awk -F"-staging" '{pr
 
 
 echo "Mapping route and rename"
-main_app_exist=$(cf apps | grep "$CURRENT_APP_HOSTNAME" | wc -l)
+main_app_exist=$(cf apps | grep "$CURRENT_APP_HOSTNAME" | grep -v "-staging" | wc -l)
 next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME" | wc -l)
 
 
