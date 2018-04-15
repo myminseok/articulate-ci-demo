@@ -26,6 +26,10 @@ export CURRENT_APP_HOSTNAME=$PWS_APP_SUFFIX-$CURRENT_APP_COLOR
 export NEXT_APP_COLOR_STRIPPED=$( echo "$NEXT_APP_COLOR" | awk -F"-staging" '{print $1}') 
 export NEXT_APP_HOSTNAME=$PWS_APP_SUFFIX-$NEXT_APP_COLOR_STRIPPED
 
+
+echo "waiting for 1 minute"
+sleep 60
+
 echo "Mapping route and rename"
 main_app_exist=$(cf apps | grep "$CURRENT_APP_HOSTNAME" | grep -v "\-staging" | wc -l)
 next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME_STAGING" | wc -l)
