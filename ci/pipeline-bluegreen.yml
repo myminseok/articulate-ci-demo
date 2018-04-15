@@ -12,7 +12,7 @@ resources:
   type: git
   source:
     branch: master
-    uri: git@github.com:myminseok/articulate-ci-demo.git
+    uri: git@github.com:myminseok/articulate.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 

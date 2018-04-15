@@ -17,7 +17,7 @@ mv -f ../source-repo/* ./
 ls -al ./target
 mkdir -p output
 mv ./target/*.jar ./output/"$BUILD_JAR_NAME"
-
+touch ./output/"$BUILD_JAR_NAME"
 
 git config --global user.email "${git-email}"
 git config --global user.name "${git-name}"
