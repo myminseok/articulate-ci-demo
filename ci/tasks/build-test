@@ -13,16 +13,15 @@ cd source-repo
 cd ../out-repo
 shopt -s dotglob
 
-#mv -f ../source-repo/* ./
-#ls -al ./target
-
+mv -f ../source-repo/* ./
+ls -al ./target
 mkdir -p output
 cp ../source-repo/target/*.jar ./output/"$BUILD_JAR_NAME"
+ls -al ./output
 #mv ./target/*.jar ./output/"$BUILD_JAR_NAME"
 
 git config --global user.email "${git-email}"
 git config --global user.name "${git-name}"
-
 git status
 git add .
 git commit -m "[ci skip] pushing jar for demo"
