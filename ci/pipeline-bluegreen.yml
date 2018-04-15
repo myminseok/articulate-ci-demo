@@ -8,13 +8,13 @@ groups:
 
 resources:
 
-- name: source-repo
-  type: git
-  source:
-    branch: master
-    uri: git@github.com:myminseok/articulate.git
-    private_key: {{github-private-key}}
-  check_every: 10s # for demo
+# - name: source-repo
+#   type: git
+#   source:
+#     branch: master
+#     uri: git@github.com:myminseok/articulate.git
+#     private_key: {{github-private-key}}
+#   check_every: 10s # for demo
 
 - name: demo-repo
   type: git
@@ -53,8 +53,8 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: source-repo
-    trigger: true
+  # - get: source-repo
+  #   trigger: true
   - get: demo-repo
     trigger: true
   - get: demo-out-repo
