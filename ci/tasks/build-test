@@ -16,7 +16,7 @@ shopt -s dotglob
 mv -f ../source-repo/* ./
 ls -al ./target
 mkdir -p output
-mv ./target/*.jar ./output/"$BUILD_JAR_NAME"
+cp ./target/*.jar ./output/"$BUILD_JAR_NAME"
 ls -al ./output
 
 
