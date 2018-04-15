@@ -49,7 +49,7 @@ then
 
 	cf unmap-route $CURRENT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $MAIN_ROUTE_HOSTNAME
 	cf stop $CURRENT_APP_HOSTNAME
-	old_next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME" | wc -l)
+	old_next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME" | grep -v "\-staging" | wc -l)
 	if [ $old_next_app_exist -eq 1 ]
 	then
 		cf delete $NEXT_APP_HOSTNAME -f
