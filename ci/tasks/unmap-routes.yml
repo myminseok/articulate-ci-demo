@@ -9,8 +9,8 @@ image_resource:
 
 
 inputs:
-- name: demo-out-repo
+- name: build-out-repo
 - name: current-app-info
 
 run:
-  path: demo-out-repo/ci/tasks/unmap-routes
+  path: build-out-repo/ci/tasks/unmap-routes

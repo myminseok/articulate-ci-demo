@@ -13,7 +13,7 @@ cd source-repo
 cd ../out-repo
 shopt -s dotglob
 # to move .git metadata
-mv -f ../demo-out-repo/* ./
+mv -f ../build-out-repo/* ./
 
 mkdir -p target
 mv -f ../source-repo/target/* ./target/

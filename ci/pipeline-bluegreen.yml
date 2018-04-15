@@ -17,15 +17,7 @@ resources:
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 
-- name: demo-repo
-  type: git
-  source:
-    branch: master
-    uri: git@github.com:myminseok/articulate-ci-demo.git
-    private_key: {{github-private-key}}
-  check_every: 10s # for demo
-
-- name: demo-out-repo
+- name: build-out-repo
   type: git
   source:
     branch: master
@@ -56,16 +48,14 @@ jobs:
   plan:
   - get: source-repo
     trigger: true
-  - get: demo-repo
-    trigger: false
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: false
   - get: CVE-check
   - task: build-test
-    file: demo-out-repo/ci/tasks/build-test.yml
+    file: build-out-repo/ci/tasks/build-test.yml
     params:
       BUILD_JAR_NAME: demo.jar
-  - put: demo-out-repo
+  - put: build-out-repo
     params:
       repository: out-repo
       rebase: true
@@ -74,12 +64,12 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: true  
     passed:
       - build
   - task: get-current-app-color
-    file: demo-out-repo/ci/tasks/current-app-get-info.yml
+    file: build-out-repo/ci/tasks/current-app-get-info.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_HOSTNAME: {{pws-app-hostname}}
@@ -90,7 +80,7 @@ jobs:
       PWS_SPACE: {{pws-space}}
       
   - task: prepare-app-manifest
-    file: demo-out-repo/ci/tasks/app-manifest-prep.yml
+    file: build-out-repo/ci/tasks/app-manifest-prep.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_HOSTNAME: {{pws-app-hostname}}
@@ -103,12 +93,12 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: true
     passed:
       - deploy-new-app
   - task: get-current-app-color
-    file: demo-out-repo/ci/tasks/current-app-get-info.yml
+    file: build-out-repo/ci/tasks/current-app-get-info.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_HOSTNAME: {{pws-app-hostname}}
@@ -118,7 +108,7 @@ jobs:
       PWS_PWD: {{deploy-password}}
       PWS_SPACE: {{pws-space}}
   - task: switch-app-routes
-    file: demo-out-repo/ci/tasks/update-routes.yml
+    file: build-out-repo/ci/tasks/update-routes.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_DOMAIN: {{pws-app-domain}}
@@ -134,12 +124,12 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: true
     passed:
       - blue-green-update
   - task: get-current-app-color
-    file: demo-out-repo/ci/tasks/current-app-get-info.yml
+    file: build-out-repo/ci/tasks/current-app-get-info.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_HOSTNAME: {{pws-app-hostname}}
@@ -149,7 +139,7 @@ jobs:
       PWS_PWD: {{deploy-password}}
       PWS_SPACE: {{pws-space}}
   - task: unmap-routes
-    file: demo-out-repo/ci/tasks/unmap-routes.yml
+    file: build-out-repo/ci/tasks/unmap-routes.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_DOMAIN: {{pws-app-domain}}

@@ -9,7 +9,7 @@ image_resource:
 
 inputs:
 - name: source-repo
-- name: demo-out-repo
+- name: build-out-repo
 
 outputs:
 - name: out-repo
@@ -17,4 +17,4 @@ outputs:
 run:
   path: /bin/bash
   args: 
-    - demo-out-repo/ci/tasks/build-test
+    - build-out-repo/ci/tasks/build-test
