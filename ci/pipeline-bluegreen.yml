@@ -4,7 +4,7 @@ groups:
   - build
   - deploy-new-app
   - blue-green-update
-  - unmap-route
+  - unmap-old-app
 
 resources:
 
@@ -12,7 +12,8 @@ resources:
   type: git
   source:
     branch: master
-    uri: git@github.com/Pivotal-Field-Engineering/pcf-ers-demo.git
+    #uri: git@github.com/Pivotal-Field-Engineering/pcf-ers-demo.git
+    uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 
@@ -129,7 +130,7 @@ jobs:
       PWS_SPACE: {{pws-space}}
 
 
-- name: unmap-route
+- name: unmap-old-app
   serial: true
   public: true
   plan:
