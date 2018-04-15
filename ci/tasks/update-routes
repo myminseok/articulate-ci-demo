@@ -24,7 +24,6 @@ export CURRENT_APP_COLOR=$(cat ./current-app-info/current-app.txt)
 export CURRENT_APP_HOSTNAME=$PWS_APP_SUFFIX-$CURRENT_APP_COLOR
 
 
-
 echo "Scaling $NEXT_APP_HOSTNAME instance to $NEXT_APP_INSTANCE_COUNT"
 cf scale $NEXT_APP_HOSTNAME -i $NEXT_APP_INSTANCE_COUNT
 echo "Scaling updated"

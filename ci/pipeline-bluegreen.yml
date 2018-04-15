@@ -12,7 +12,6 @@ resources:
   type: git
   source:
     branch: master
-    #uri: git@github.com/Pivotal-Field-Engineering/pcf-ers-demo.git
     uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
@@ -142,6 +141,7 @@ jobs:
     file: demo-out-repo/ci/tasks/current-app-get-info.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_APP_HOSTNAME: {{pws-app-hostname}}
       PWS_API: {{pws-api}}
       PWS_ORG: {{pws-organization}}
       PWS_USER: {{deploy-username}}
