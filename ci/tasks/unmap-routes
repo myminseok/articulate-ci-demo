@@ -38,19 +38,24 @@ then
 
 elif [ $main_app_exist -eq 0 ] && [ $next_app_exist -eq 1 ] 
 then
-echo "only new app exist. new app promotes to main app, remove new "
-cf rename $NEXT_APP_HOSTNAME_STAGING $NEXT_APP_HOSTNAME
-cf unmap-route $NEXT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $NEXT_APP_HOSTNAME_STAGING
+	echo "only new app exist. new app promotes to main app, remove new "
+	cf rename $NEXT_APP_HOSTNAME_STAGING $NEXT_APP_HOSTNAME
+	cf unmap-route $NEXT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $NEXT_APP_HOSTNAME_STAGING
 
 elif [ $main_app_exist -eq 1 ] && [ $next_app_exist -eq 1 ] 
 then
-echo "both staging and main app exists. staging app promotes to main app with the same instance count of existing main account"
-echo "main app will unmap route and stop process."
+	echo "both staging and main app exists. staging app promotes to main app with the same instance count of existing main account"
+	echo "main app will unmap route and stop process."
 
-cf unmap-route $CURRENT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $MAIN_ROUTE_HOSTNAME
-cf stop $CURRENT_APP_HOSTNAME
-cf rename $NEXT_APP_HOSTNAME_STAGING $NEXT_APP_HOSTNAME
-cf unmap-route $NEXT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $NEXT_APP_HOSTNAME_STAGING
+	cf unmap-route $CURRENT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $MAIN_ROUTE_HOSTNAME
+	cf stop $CURRENT_APP_HOSTNAME
+	old_next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME" | wc -l)
+	if [ $old_next_app_exist -eq 1 ]
+	then
+		cf delete $NEXT_APP_HOSTNAME -f
+	fi
+	cf rename $NEXT_APP_HOSTNAME_STAGING $NEXT_APP_HOSTNAME
+	cf unmap-route $NEXT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $NEXT_APP_HOSTNAME_STAGING
 fi
 
 echo "Mapping route and rename done."
