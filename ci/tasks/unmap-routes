@@ -44,12 +44,12 @@ cf rename $NEXT_APP_HOSTNAME $NEXT_APP_COLOR_STRIPTED
 elif [ $main_app_exist -eq 1 ] && [ $next_app_exist -eq 1 ] 
 then
 echo "both staging and main app exists. staging app promotes to main app with the same instance count of existing main account"
-echo "main app turns into vernable app with stop process and unmap routes."
-echo "existing vernarable app will be removed"
+echo "main app will unmap route and stop process."
 
-cf unmap-route $MAIN_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $MAIN_ROUTE_HOSTNAME
-cf rename $NEXT_APP_HOSTNAME $NEXT_APP_COLOR_STRIPTED
+cf unmap-route $CURRENT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $MAIN_ROUTE_HOSTNAME
 cf stop $CURRENT_APP_HOSTNAME 
+cf rename $NEXT_APP_HOSTNAME $NEXT_APP_COLOR_STRIPTED
+
 
 fi
 
