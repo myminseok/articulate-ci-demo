@@ -13,6 +13,8 @@ cf apps
 
 cf routes
 
+sleep 60 "Wait for 1 min"
+
 export PWS_DOMAIN_NAME=$PWS_APP_DOMAIN
 export MAIN_ROUTE_HOSTNAME=main-$PWS_APP_SUFFIX
 

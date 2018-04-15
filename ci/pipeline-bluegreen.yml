@@ -39,11 +39,6 @@ resources:
   source:
     repository: java
 
-- name: timer-1m
-  type: time
-  source: {interval: 1m}
-
-
 jobs:
 - name: build
   serial: true
@@ -122,8 +117,6 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: timer-1m
-    trigger: true
   - get: demo-out-repo
     trigger: true
     passed:
