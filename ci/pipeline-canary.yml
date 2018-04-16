@@ -65,7 +65,7 @@ jobs:
   - get: demo-out-repo
     trigger: true  
     passed:
-      - build-test
+      - build
   - task: get-current-app-info
     file: demo-out-repo/ci/tasks/current-app-get-info-canary.yml
     params:
@@ -92,7 +92,7 @@ jobs:
   - get: demo-out-repo
     trigger: false
     passed:
-      - deploy-new-app
+      - canary-test
   - task: get-current-app-info-canary
     file: demo-out-repo/ci/tasks/current-app-get-info-canary.yml
     params:
