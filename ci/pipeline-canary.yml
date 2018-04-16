@@ -1,9 +1,9 @@
 groups:
 - name: main
   jobs:
-  - build-test
-  - deploy-new-app
-  - promote-new-version-canary
+  - build
+  - canary-test
+  - roll-out
 
 resources:
 - name: demo-repo
@@ -39,7 +39,7 @@ resources:
     repository: java
     
 jobs:
-- name: build-test
+- name: build
   serial: true
   public: true
   plan:
@@ -58,7 +58,7 @@ jobs:
       rebase: true
       force: true
 
-- name: deploy-new-app
+- name: canary-test
   serial: true
   public: true
   plan:
@@ -85,7 +85,7 @@ jobs:
       manifest: output/manifest.yml
       path: output/demo-canary.jar
 
-- name: promote-new-version-canary
+- name: roll-out
   serial: true
   public: true
   plan:
