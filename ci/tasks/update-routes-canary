@@ -14,14 +14,14 @@ cf apps
 cf routes
 
 export PWS_DOMAIN_NAME=$PWS_APP_DOMAIN
-export MAIN_ROUTE_HOSTNAME=canary-main-$PWS_APP_SUFFIX
-export MAIN_APP_HOSTNAME=canary-main-$PWS_APP_SUFFIX
+export MAIN_ROUTE_HOSTNAME=$PWS_APP_HOSTNAME
+export MAIN_APP_HOSTNAME=$PWS_APP_SUFFIX
 
-export STAGING_ROUTE_HOSTNAME=canary-staging-$PWS_APP_SUFFIX
-export STAGING_APP_HOSTNAME=canary-staging-$PWS_APP_SUFFIX
+export STAGING_ROUTE_HOSTNAME=$PWS_APP_HOSTNAME-staging
+export STAGING_APP_HOSTNAME=$PWS_APP_SUFFIX-staging
 export STAGING_APP_INSTANCE_COUNT=$(cat ./current-app-info/next-app-instance-count.txt)
 
-export VERNARABLE_APP_HOSTNAME=canary-main-$PWS_APP_SUFFIX-vernarable
+export VERNARABLE_APP_HOSTNAME=$PWS_APP_SUFFIX-vernarable
 
 echo "scaling staging instance to $STAGING_APP_INSTANCE_COUNT prior to promote to $MAIN_APP_HOSTNAME"
 cf scale $STAGING_APP_HOSTNAME -i $STAGING_APP_INSTANCE_COUNT
