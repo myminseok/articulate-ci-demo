@@ -6,15 +6,15 @@ groups:
   - roll-out
 
 resources:
-- name: demo-repo
+- name: source-repo
   type: git
   source:
     branch: master
-    uri: git@github.com:myminseok/articulate-ci-demo.git
+    uri: {{git-source-repo-uri}}
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 
-- name: demo-out-repo
+- name: build-out-repo
   type: git
   source:
     branch: master
@@ -43,31 +43,31 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: demo-repo
+  - get: source-repo
     trigger: true
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: false
   - get: CVE-check
   - task: build-test
-    file: demo-out-repo/ci/tasks/build-test.yml
+    file: build-out-repo/ci/tasks/build-test.yml
     params:
       BUILD_JAR_NAME: demo-canary.jar
-  - put: demo-out-repo
+  - put: build-out-repo
     params:
       repository: out-repo
       rebase: true
-      force: true
+#      force: true
 
 - name: canary-test
   serial: true
   public: true
   plan:
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: true  
     passed:
       - build
   - task: get-current-app-info
-    file: demo-out-repo/ci/tasks/current-app-get-info-canary.yml
+    file: build-out-repo/ci/tasks/current-app-get-info-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_API: {{pws-api}}
@@ -77,7 +77,7 @@ jobs:
       PWS_SPACE: {{pws-space}}
 
   - task: prepare-app-manifest-canary
-    file: demo-out-repo/ci/tasks/app-manifest-prep-canary.yml
+    file: build-out-repo/ci/tasks/app-manifest-prep-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
   - put: PCF
@@ -89,26 +89,26 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: demo-out-repo
+  - get: build-out-repo
     trigger: false
     passed:
       - canary-test
   - task: get-current-app-info-canary
-    file: demo-out-repo/ci/tasks/current-app-get-info-canary.yml
+    file: build-out-repo/ci/tasks/current-app-get-info-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_APP_HOSTNAME: {{pws-app-hostname}}
       PWS_API: {{pws-api}}
       PWS_ORG: {{pws-organization}}
       PWS_USER: {{deploy-username}}
       PWS_PWD: {{deploy-password}}
       PWS_SPACE: {{pws-space}}
- 
-
   - task: switch-app-routes
     file: demo-out-repo/ci/tasks/update-routes-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_DOMAIN: {{pws-app-domain}}
+      PWS_APP_HOSTNAME: {{pws-app-hostname}}
       PWS_API: {{pws-api}}
       PWS_ORG: {{pws-organization}}
       PWS_USER: {{deploy-username}}

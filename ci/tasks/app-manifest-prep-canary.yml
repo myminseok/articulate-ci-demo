@@ -8,11 +8,11 @@ image_resource:
     tag: "latest"
 
 inputs:
-- name: demo-out-repo
+- name: build-out-repo
 - name: current-app-info
 
 outputs:
 - name: output
 
 run:
-  path: demo-out-repo/ci/tasks/app-manifest-prep-canary
+  path: build-out-repo/ci/tasks/app-manifest-prep-canary
