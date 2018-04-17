@@ -70,6 +70,7 @@ jobs:
     file: build-out-repo/ci/tasks/current-app-get-info-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_APP_HOSTNAME: {{pws-app-hostname}}
       PWS_API: {{pws-api}}
       PWS_ORG: {{pws-organization}}
       PWS_USER: {{deploy-username}}
@@ -80,7 +81,6 @@ jobs:
     file: build-out-repo/ci/tasks/app-manifest-prep-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
-      PWS_APP_HOSTNAME: {{pws-app-hostname}}
   - put: PCF
     params:
       manifest: output/manifest.yml

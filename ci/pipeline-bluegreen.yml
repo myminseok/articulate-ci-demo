@@ -83,7 +83,6 @@ jobs:
     file: build-out-repo/ci/tasks/app-manifest-prep.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
-      PWS_APP_HOSTNAME: {{pws-app-hostname}}
   - put: PCF
     params:
       manifest: output/manifest.yml
