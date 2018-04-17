@@ -104,7 +104,7 @@ jobs:
       PWS_PWD: {{deploy-password}}
       PWS_SPACE: {{pws-space}}
   - task: switch-app-routes
-    file: demo-out-repo/ci/tasks/update-routes-canary.yml
+    file: build-out-repo/ci/tasks/update-routes-canary.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
       PWS_APP_DOMAIN: {{pws-app-domain}}
