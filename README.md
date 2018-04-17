@@ -40,6 +40,5 @@ fly -t tutorial set-pipeline -p canary -c ./ci/pipeline-canary.yml -l ~/ci-crede
 ```
 
 # push app
-
-##edit source code from 'git-source-repo-uri' in 'ci-credentials.yml' and push.
-## in 10 seconds, concourse pipeline will start to build
+edit source code from 'git-source-repo-uri' in 'ci-credentials.yml' and push.
+in 10 seconds, concourse pipeline will start to build
