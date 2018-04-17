@@ -33,7 +33,7 @@ then
 fi
 
 echo "Mapping route and rename"
-main_app_exist=$(cf apps | grep "$MAIN_APP_HOSTNAME" | wc -l)
+main_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_HOSTNAME" | wc -l)
 staging_app_exist=$(cf apps | grep "$STAGING_APP_HOSTNAME" | wc -l)
 
 
