@@ -2,7 +2,7 @@
 
 set -xe
 
-sed "s/APPNAME/canary-staging-$PWS_APP_SUFFIX/" ./build-out-repo/manifests/manifest.yml > ./output/manifest.yml
+sed "s/APPNAME/$PWS_APP_SUFFIX-staging/" ./build-out-repo/manifests/manifest.yml > ./output/manifest.yml
 
 cat ./output/manifest.yml
 
