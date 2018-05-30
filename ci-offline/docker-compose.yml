@@ -26,5 +26,5 @@ services:
     - CONCOURSE_NO_REALLY_I_DONT_WANT_ANY_AUTH=true
     - CONCOURSE_WORKER_GARDEN_NETWORK
     - CONCOURSE_LOG_LEVEL=info
-    dns: 10.10.10.199
+    dns: localci.pcfdemo.net
 
