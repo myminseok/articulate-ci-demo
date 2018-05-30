@@ -7,17 +7,38 @@ docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
 ## upload docker image for articulate
 ```
-docker pull pivotalservices/docker-concourse-cf-tools:latest
+cd /root/demo/docker-image-save
+
+# docker pull pivotalservices/docker-concourse-cf-tools:latest
+# docker image save pivotalservices/docker-concourse-cf-tools -o pivotalservices__docker-concourse-cf-tools
+docker image load -i pivotalservices__docker-concourse-cf-tools
 docker tag pivotalservices/docker-concourse-cf-tools localhost:5000/pivotalservices/docker-concourse-cf-tools
 docker push localhost:5000/pivotalservices/docker-concourse-cf-tools
 docker image remove pivotalservices/docker-concourse-cf-tools:latest
 docker image remove  localhost:5000/pivotalservices/docker-concourse-cf-tools
 
-docker pull myminseok/java8_git_mvn:v1
-docker tag myminseok/java8_git_mvn:v2 localhost:5000/myminseok/java8_git_mvn:v1
+
+# docker pull myminseok/java8_git_mvn:v1
+# docker image save myminseok/java8_git_mvn:v1 -o myminseok__java8_git_mvn__v1
+docker image load -i myminseok__java8_git_mvn__v1
+docker tag myminseok/java8_git_mvn:v1 localhost:5000/myminseok/java8_git_mvn:v1
 docker push localhost:5000/myminseok/java8_git_mvn:v1
 docker image remove myminseok/java8_git_mvn:v1
 docker image remove localhost:5000/myminseok/java8_git_mvn:v1
+
+```
+
+
+## upload
+```
+## docker pull pivotalservices/docker-concourse-cf-tools:latest
+
+
+
+
+
+##docker pull myminseok/java8_git_mvn:v1
+## docker image save myminseok/java8_git_mvn:v1 -o myminseok__java8_git_mvn__v1
 ```
 
 
