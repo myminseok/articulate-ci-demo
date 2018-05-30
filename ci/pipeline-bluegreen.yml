@@ -39,7 +39,7 @@ resources:
 - name: CVE-check
   type: docker-image
   source:
-    repository: java
+    repository: pivotalservices/docker-concourse-cf-tools
 
 jobs:
 - name: build

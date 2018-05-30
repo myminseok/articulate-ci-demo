@@ -39,9 +39,9 @@ resources:
 - name: CVE-check
   type: docker-image
   source:
-    repository: localdockerrepo.pcfdemo.net:5000/java
+    repository: localdockerrepo.pcfdemo.net:5000/pivotalservices/docker-concourse-cf-tools
     insecure_registries: [ "localdockerrepo.pcfdemo.net:5000" ]
-
+    
 jobs:
 - name: build
   serial: true
