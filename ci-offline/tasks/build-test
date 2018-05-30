@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -xe
+
+
+mkdir -p /root/.m2/repository
+cp -r /app/m2/* /root/.m2/repository/
+
+cd source-repo
+./mvnw clean package
+#./mvnw -Dmaven.repo.local=/app/m2 clean package
+
+cd ../out-repo
+shopt -s dotglob
+# to move .git metadata
+mv -f ../build-out-repo/* ./
+
+mkdir -p target
+mv -f ../source-repo/target/* ./target/
+ls -al ./target
+
+mkdir -p output
+cp ./target/*.jar ./output/"$BUILD_JAR_NAME"
+ls -al ./output
+
+
+
+git config --global user.email "${git-email}"
+git config --global user.name "${git-name}"
+git status
+git add .
+git commit -m "[ci skip] pushing jar for demo"
