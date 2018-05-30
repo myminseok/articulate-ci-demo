@@ -11,7 +11,7 @@ resources:
 - name: source-repo
   type: git
   source:
-    branch: master
+    branch: offline
 #    uri: git@github.com:myminseok/articulate.git
     uri: {{git-source-repo-uri}}
     private_key: {{github-private-key}}
