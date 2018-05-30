@@ -1,4 +1,13 @@
 
+# VM 
+pivotal/changeme
+
+# DNS to VM IP
+change 10.10.10.199 to VM IP
+```
+10.10.10.199 localdockerrepo.pcfdemo.net 
+10.10.10.199 localci.pcfdemo.net 
+```
 
 # docker repo
 ```
@@ -29,22 +38,10 @@ docker image remove localhost:5000/myminseok/java8_git_mvn:v1
 ```
 
 
-## upload
-```
-## docker pull pivotalservices/docker-concourse-cf-tools:latest
-
-
-
-
-
-##docker pull myminseok/java8_git_mvn:v1
-## docker image save myminseok/java8_git_mvn:v1 -o myminseok__java8_git_mvn__v1
-```
-
 
 # nexus
 ```
-docker run -d -p 8081:8081 --name nexus sonatype/nexus:oss
+docker run -d -p 8081:8081 --restart=always  --name nexus  sonatype/nexus:oss
 ```
 http://10.10.10.199:8081/nexus
 
@@ -58,14 +55,14 @@ git checkout offline
 cd /root/demo/articulate && ./mvn-uploadtonexus.sh
 ```
 
+
+
 # gitlab
 ```
 docker run --detach --hostname 10.10.10.199 --publish 443:443 --publish 8082:80 --name gitlab --restart always gitlab/gitlab-ce
 ```
-
 http://10.10.10.199:8082/ (wait for few minutes)
 
-# gitlab 
 ## set root password 'changeme' : http://10.10.10.199:8082/
 ## login as root/changeme
 ## create a public project 'articulate' : http://10.10.10.199:8082/projects/new
@@ -117,7 +114,21 @@ cd /root/demo/articulate-ci-demo/ci-offline
 ./3.setpipeline.sh
 ```
 
-## destroy
+## start docker after rebooting VM.
+```
+
+cd /root/demo/articulate-ci-demo/ci-offline
+docker-compose up -d
+docker start registry
+docker start nexus
+docker start gitlab
+
+```
+
+
+
+
+## destroy docker
 ```
 
 cd /root/demo/articulate-ci-demo/ci-offline
@@ -129,6 +140,8 @@ docker stop gitlab
 docker system prune -a --volumes -f
 docker system df -v
 ```
+
+
 
 
 
