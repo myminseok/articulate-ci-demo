@@ -4,9 +4,9 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: localhost:5000/java
+    repository: localdockerrepo.pcfdemo.net:5000/java
     tag: 8-jdk-alpine
-    insecure_registries: [ "localhost:5000" ]
+    insecure_registries: [ "localdockerrepo.pcfdemo.net:5000" ]
 
 inputs:
 - name: articulate-ci-demo

@@ -4,10 +4,10 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: localhost:5000/myminseok/java8_git_mvn
+    repository: localdockerrepo.pcfdemo.net:5000/myminseok/java8_git_mvn
     #tag: v2 # spring 1.5.4
     tag: v1 # spring 1.3.4
-    insecure_registries: [ "localhost:5000" ]
+    insecure_registries: [ "localdockerrepo.pcfdemo.net:5000" ]
 
 
 

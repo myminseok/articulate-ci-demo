@@ -39,8 +39,8 @@ resources:
 - name: CVE-check
   type: docker-image
   source:
-    repository: localhost:5000/java
-    insecure_registries: [ "localhost:5000" ]
+    repository: localdockerrepo.pcfdemo.net:5000/java
+    insecure_registries: [ "localdockerrepo.pcfdemo.net:5000" ]
 
 jobs:
 - name: build
