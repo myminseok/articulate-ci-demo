@@ -11,7 +11,13 @@ change 10.10.10.199 to VM IP
 
 # docker repo
 ```
+cd /root/demo/docker-image-save
+# docker pull registry:2 
+# docker image save registry:2 -o registry_2
+docker image load -i registry_2
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+
 ```
 
 ## upload docker image for articulate
@@ -41,6 +47,11 @@ docker image remove localhost:5000/myminseok/java8_git_mvn:v1
 
 # nexus
 ```
+cd /root/demo/docker-image-save
+# docker pull sonatype/nexus:oss
+# docker image save sonatype/nexus:oss -o sonatype_nexus_oss
+docker image load -i sonatype_nexus_oss
+
 docker run -d -p 8081:8081 --restart=always  --name nexus  sonatype/nexus:oss
 ```
 http://10.10.10.199:8081/nexus
@@ -61,6 +72,11 @@ http://10.10.10.199:8081/nexus/content/repositories/releases/
 
 # gitlab
 ```
+cd /root/demo/docker-image-save
+# docker pull gitlab/gitlab-ce
+# docker image save gitlab/gitlab-ce -o gitlab_gitlab-ce
+docker image load -i gitlab/gitlab-ce
+
 docker run --detach --hostname 10.10.10.199 --publish 443:443 --publish 8082:80 --name gitlab --restart always gitlab/gitlab-ce
 ```
 http://10.10.10.199:8082/ (wait for few minutes)
@@ -102,6 +118,22 @@ Password for 'http://root@10.10.10.199:8082': changeme
 
 
 # concourse ci
+
+```
+cd /root/demo/docker-image-save
+#docker pull concourse/concourse
+#docker image save concourse/concourse -o concourse_concourse
+docker image load -i concourse_concourse
+
+
+cd /root/demo/docker-image-save
+#docker pull postgres
+#docker image save postgres -o postgres
+docker image load -i postgres
+
+
+```
+
 ## clone pipeline code
 ```
 cd /root/demo/
