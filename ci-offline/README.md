@@ -1,5 +1,6 @@
 
 # VM 
+Ubuntu 16.04
 pivotal/changeme
 
 # DNS to VM IP
@@ -26,8 +27,9 @@ cd /root/demo/docker-image-save
 
 # docker pull pivotalservices/docker-concourse-cf-tools:latest
 # docker image save pivotalservices/docker-concourse-cf-tools -o pivotalservices__docker-concourse-cf-tools
+# docker image load -i pivotalservices__docker-concourse-cf-tools
+# docker tag pivotalservices/docker-concourse-cf-tools localhost:5000/pivotalservices/docker-concourse-cf-tools
 docker image load -i pivotalservices__docker-concourse-cf-tools
-docker tag pivotalservices/docker-concourse-cf-tools localhost:5000/pivotalservices/docker-concourse-cf-tools
 docker push localhost:5000/pivotalservices/docker-concourse-cf-tools
 docker image remove pivotalservices/docker-concourse-cf-tools:latest
 docker image remove  localhost:5000/pivotalservices/docker-concourse-cf-tools
@@ -35,8 +37,9 @@ docker image remove  localhost:5000/pivotalservices/docker-concourse-cf-tools
 
 # docker pull myminseok/java8_git_mvn:v1
 # docker image save myminseok/java8_git_mvn:v1 -o myminseok__java8_git_mvn__v1
+# docker image load -i myminseok__java8_git_mvn__v1
+# docker tag myminseok/java8_git_mvn:v1 localhost:5000/myminseok/java8_git_mvn:v1
 docker image load -i myminseok__java8_git_mvn__v1
-docker tag myminseok/java8_git_mvn:v1 localhost:5000/myminseok/java8_git_mvn:v1
 docker push localhost:5000/myminseok/java8_git_mvn:v1
 docker image remove myminseok/java8_git_mvn:v1
 docker image remove localhost:5000/myminseok/java8_git_mvn:v1
@@ -65,6 +68,7 @@ cd /root/demo/articulate
 git checkout offline
 cd /root/demo/articulate && ./mvn-uploadtonexus.sh
 ```
+
 check if artifacts are loaded.
 http://10.10.10.199:8081/nexus/content/repositories/releases/
 
@@ -75,10 +79,11 @@ http://10.10.10.199:8081/nexus/content/repositories/releases/
 cd /root/demo/docker-image-save
 # docker pull gitlab/gitlab-ce
 # docker image save gitlab/gitlab-ce -o gitlab_gitlab-ce
-docker image load -i gitlab/gitlab-ce
+docker image load -i gitlab_gitlab-ce 
 
 docker run --detach --hostname 10.10.10.199 --publish 443:443 --publish 8082:80 --name gitlab --restart always gitlab/gitlab-ce
 ```
+
 http://10.10.10.199:8082/ (wait for few minutes)
 
 ## set root password 'changeme' : http://10.10.10.199:8082/
@@ -86,6 +91,7 @@ http://10.10.10.199:8082/ (wait for few minutes)
 
 ## add ssh key  http://10.10.10.199:8082/profile/keys/
 ### cat /root/.ssh/id_rsa.pub 
+
 ```
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJNIkIFHy0hF4v4wXMmKsXv4g4JBd2hQvaN6U2ocKhxmi1BTElqVxFthwsd7Q5lgUxJx4K/BL6u9dXYkk0eEKYMlp9/Oz2UeAUb6D9hqhbATm52YzMxThYtlxXvWnvis9c3Cx+dy9pYSABGCdnkPaB9emJLaYNY7m60HTKzzCzEYE2Y1lpwMI8tWUzmyRsnWRpjXYY4KD8g++52e+cgRje43riol/4O59KOh94r3DnJL6Ja9o03Ljns9fu9DC69su/1k+A7dNQGU9wwuXxf8ycQgYNVl5iAZNVHHh2hDGtf+aTp5WbySVHfkzwWbr68gPx0xir5O7dv4wVJkgR6X9B root@ubuntu
 ```
