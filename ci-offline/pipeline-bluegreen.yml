@@ -21,7 +21,8 @@ resources:
   type: git
   source:
     branch: master
-    uri: git@github.com:myminseok/articulate-ci-demo.git
+    uri: http://root:changeme@localci.pcfdemo.net:8082/root/articulate-ci-demo.git
+    #uri: git@github.com:myminseok/articulate-ci-demo.git
     private_key: {{github-private-key}}
     disable_ci_skip: true
   check_every: 10s # for demo
