@@ -40,7 +40,8 @@ resources:
 - name: CVE-check
   type: docker-image
   source:
-    repository: localdockerrepo.pcfdemo.net:5000/pivotalservices/docker-concourse-cf-tools
+    repository: localdockerrepo.pcfdemo.net:5000/myminseok/java8_git_mvn
+    tag: v1 
     insecure_registries: [ "localdockerrepo.pcfdemo.net:5000" ]
     
 jobs:
