@@ -43,17 +43,3 @@ set -xe
 echo "Current main app routes to app instance $current_app"
 echo "New version of app to be deployed to instance $next_app"
 
-
-current_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX.$PWS_APP_HOSTNAME" | grep "\-\-$current_app" | wc -l)
-current_instance_count=1
-if [ $current_app_exist -gt 0 ]
-then
-   current_instance_count=$(cf apps | grep "$PWS_APP_SUFFIX.$PWS_APP_HOSTNAME" | grep "\-\-$current_app" | awk -F"/" '{print $2} ' |awk '{print $1}') 
-
-fi
-echo $current_instance_count > ./current-app-info/next-app-instance-count.txt
-
-
-set -xe
-echo "New version of app to be deployed to instance-count $(cat ./current-app-info/next-app-instance-count.txt)"
-

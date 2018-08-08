@@ -14,57 +14,60 @@ cf apps
 cf routes
 
 
-export PWS_DOMAIN_NAME=$PWS_APP_DOMAIN
-export MAIN_ROUTE_HOSTNAME=$PWS_APP_HOSTNAME
+export cf_domain=$PWS_APP_DOMAIN
+export cf_app_route=$PWS_APP_HOSTNAME
 
-export NEXT_APP_COLOR=$(cat ./current-app-info/next-app.txt)
-export NEXT_APP_HOSTNAME_STAGING=$PWS_APP_SUFFIX-$NEXT_APP_COLOR
-
-export CURRENT_APP_COLOR=$(cat ./current-app-info/current-app.txt)
-export CURRENT_APP_HOSTNAME=$PWS_APP_SUFFIX-$CURRENT_APP_COLOR
-
-export NEXT_APP_COLOR_STRIPPED=$( echo "$NEXT_APP_COLOR" | awk -F"-staging" '{print $1}') 
-export NEXT_APP_HOSTNAME=$PWS_APP_SUFFIX-$NEXT_APP_COLOR_STRIPPED
-
+export current_app=$(cat ./current-app-info/next-app.txt)
+export next_app=$(cat ./current-app-info/current-app.txt)
 
 #echo "waiting for 1 minute"
 #sleep 60
 
-echo "Mapping route and rename"
-main_app_exist=$(cf apps | grep "$CURRENT_APP_HOSTNAME" | grep -v "\-staging" | wc -l)
-next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME_STAGING" | wc -l)
 
-
-if [ $main_app_exist -eq 0 ] && [ $next_app_exist -eq 0 ]
+# look for current app and parse instance count
+is_exist_current_app=`cf apps | grep "$cf_app_route.$cf_domain" | grep "\-\-$current_app" |wc -l || true`
+current_app_instance_count=1
+if [ $is_exist_current_app -ne 0 ]
 then
-  echo "No app for $CURRENT_APP_HOSTNAME $NEXT_APP_HOSTNAME_STAGING, exit"
-  exit 0
-
-elif [ $main_app_exist -eq 0 ] && [ $next_app_exist -gt 0 ] 
-then
-	echo "only new app exist. new app promotes to main app, remove new "
-	cf rename $NEXT_APP_HOSTNAME_STAGING $NEXT_APP_HOSTNAME
-	cf unmap-route $NEXT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $NEXT_APP_HOSTNAME_STAGING
-
-elif [ $main_app_exist -gt 0 ] && [ $next_app_exist -gt 0 ] 
-then
-	echo "both staging and main app exists. staging app promotes to main app with the same instance count of existing main account"
-	echo "main app will unmap route and stop process."
-
-	cf unmap-route $CURRENT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $MAIN_ROUTE_HOSTNAME
-	cf stop $CURRENT_APP_HOSTNAME
-	old_next_app_exist=$(cf apps | grep "$NEXT_APP_HOSTNAME" | grep -v "\-staging" | wc -l)
-	if [ $old_next_app_exist -gt 0 ]
-	then
-		cf delete $NEXT_APP_HOSTNAME -f
-	fi
-	cf rename $NEXT_APP_HOSTNAME_STAGING $NEXT_APP_HOSTNAME
-	cf unmap-route $NEXT_APP_HOSTNAME $PWS_DOMAIN_NAME --hostname $NEXT_APP_HOSTNAME_STAGING
+ echo " current_app exists! "
+ current_app_instance_count=$(cf apps | grep "$cf_app_route.$cf_domain"  |grep "\-\-$current_app" |  awk -F"/" '{print $2} ' |awk '{print $1}') 
 fi
+echo "current_app_instance_count" $current_app_instance_count
 
-echo "Mapping route and rename done."
+
+cf scale "$cf_app_route--$next_app" -i $current_app_instance_count
+
+# check whether new app instances are all running state
+for i in {1..12}
+do
+	next_app_instance_count=`cf app "$cf_app_route--$next_app" | grep "running" | wc -l`
+	echo "current $next_app_instance_count"
+	if [ $next_app_instance_count -eq $current_app_instance_count ]
+	then
+		echo "ALL new app '$cf_app_route--$next_app' instances are all RUNNING state"
+		break
+	fi
+	echo "waiting for ALL new app '$cf_app_route--$next_app' instances to be RUNNING state"
+	if [ i -eq 12 ]
+	then
+		echo "TIMEOUT! NOT all  new app '$cf_app_route--$next_app' instances are RUNNING state"
+		exit 1
+	fi
+	sleep 5
+done
+
+
+echo "Mapping main app route to point to $cf_app_route--$next_app instance"
+cf map-route "$cf_app_route--$next_app" $cf_domain --hostname $cf_app_route
 cf routes
-cf apps
+
+echo "Removing previous service app route that pointed to $cf_app_route--$current_app instance"
+set +e
+cf unmap-route "$cf_app_route--$current_app" $cf_domain --hostname $cf_app_route
+set -e
+
+echo "Routes updated"
+cf routes
 
 
 
