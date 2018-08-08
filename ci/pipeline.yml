@@ -89,7 +89,7 @@ jobs:
   public: true
   plan:
   - get: demo-out-repo
-    trigger: true
+    trigger: false 
     passed:
       - deploy-new-app
   - task: get-current-app-color
