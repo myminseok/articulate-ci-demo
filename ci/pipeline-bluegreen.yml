@@ -3,8 +3,7 @@ groups:
   jobs:
   - build
   - deploy-new-app
-  - blue-green-update
-  - unmap-old-app
+  - map-route
 
 resources:
 
