@@ -5,8 +5,8 @@ image_resource:
   type: docker-image
   source:
     repository: myminseok/java8_git_mvn
-    #tag: v2 # spring 1.5.4
-    tag: v1 # spring 1.3.4
+    tag: v2 # spring 1.5.4
+    #tag: v1 # spring 1.3.4
 
 inputs:
 - name: source-repo
