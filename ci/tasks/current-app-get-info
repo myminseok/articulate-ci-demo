@@ -15,7 +15,7 @@ set +e
 current_app="green"
 next_app="blue"
 
-result=`cf apps | grep "$PWS_APP_HOSTNAME.$PWS_APP_DOMAIN" | grep "\-\-green" |wc -l || true`
+result=`cf apps | grep "$PWS_APP_HOSTNAME.$PWS_APP_DOMAIN" | grep "$PWS_APP_SUFFIX\-\-green" |wc -l || true`
 if [ $result -ne 0 ]
 then
   current_app="green"
