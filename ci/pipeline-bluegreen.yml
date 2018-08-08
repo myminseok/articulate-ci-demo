@@ -88,12 +88,13 @@ jobs:
       manifest: output/manifest.yml
       path: output/demo.jar
 
-- name: blue-green-update
+
+- name: map-route
   serial: true
   public: true
   plan:
   - get: build-out-repo
-    trigger: true
+    trigger: false
     passed:
       - deploy-new-app
   - task: get-current-app-color
@@ -106,38 +107,7 @@ jobs:
       PWS_USER: {{deploy-username}}
       PWS_PWD: {{deploy-password}}
       PWS_SPACE: {{pws-space}}
-  - task: switch-app-routes
-    file: build-out-repo/ci/tasks/update-routes.yml
-    params:
-      PWS_APP_SUFFIX: {{pws-app-suffix}}
-      PWS_APP_DOMAIN: {{pws-app-domain}}
-      PWS_APP_HOSTNAME: {{pws-app-hostname}}
-      PWS_API: {{pws-api}}
-      PWS_ORG: {{pws-organization}}
-      PWS_USER: {{deploy-username}}
-      PWS_PWD: {{deploy-password}}
-      PWS_SPACE: {{pws-space}}
-
-
-- name: unmap-old-app
-  serial: true
-  public: true
-  plan:
-  - get: build-out-repo
-    trigger: true
-    passed:
-      - blue-green-update
-  - task: get-current-app-color
-    file: build-out-repo/ci/tasks/current-app-get-info.yml
-    params:
-      PWS_APP_SUFFIX: {{pws-app-suffix}}
-      PWS_APP_HOSTNAME: {{pws-app-hostname}}
-      PWS_API: {{pws-api}}
-      PWS_ORG: {{pws-organization}}
-      PWS_USER: {{deploy-username}}
-      PWS_PWD: {{deploy-password}}
-      PWS_SPACE: {{pws-space}}
-  - task: unmap-routes
+  - task: map-route
     file: build-out-repo/ci/tasks/unmap-routes.yml
     params:
       PWS_APP_SUFFIX: {{pws-app-suffix}}
