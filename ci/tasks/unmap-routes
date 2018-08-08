@@ -13,8 +13,8 @@ cf apps
 
 cf routes
 
-export current_app=$(cat ./current-app-info/next-app.txt)
-export next_app=$(cat ./current-app-info/current-app.txt)
+export current_app=$(cat ./current-app-info/current-app.txt)
+export next_app=$(cat ./current-app-info/next-app.txt)
 
 #echo "waiting for 1 minute"
 #sleep 60
