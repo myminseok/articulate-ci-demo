@@ -12,22 +12,10 @@ cf login -u $PWS_USER -p $PWS_PWD -o "$PWS_ORG" -s "$PWS_SPACE"
 cf apps
 
 set +e
-
-main_blue_app_exist=$(cf apps | grep "$PWS_APP_SUFFIX" | grep "$PWS_APP_HOSTNAME" | grep "BLUE" | grep -v "\-staging" | wc -l)
-if [ $main_blue_app_exist -gt 0 ]
-then
-  echo "BLUE" > ./current-app-info/current-app.txt
-  echo "GREEN-staging" > ./current-app-info/next-app.txt
-else
-  echo "GREEN" > ./current-app-info/current-app.txt
-  echo "BLUE-staging" > ./current-app-info/next-app.txt
-fi
-
-set +e
 current_app="green"
 next_app="blue"
 
-result=`cf apps | grep "$PWS_APP_SUFFIX.$PWS_APP_HOSTNAME" | grep "\-\-green" |wc -l || true`
+result=`cf apps | grep "$PWS_APP_HOSTNAME.$PWS_APP_DOMAIN" | grep "\-\-green" |wc -l || true`
 if [ $result -ne 0 ]
 then
   current_app="green"
