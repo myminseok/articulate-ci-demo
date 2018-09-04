@@ -1,4 +1,0 @@
-git add .
-git status
-git commit -m "x$1"
-git push

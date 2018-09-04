@@ -1,5 +1,6 @@
 
 # setup concourse server
+docker-compose: https://github.com/concourse/concourse-docker
 
 ```
 cd articulate-ci-demo
