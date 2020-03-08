@@ -10,7 +10,7 @@ M2_HOME=${HOME}/.m2
 mkdir -p ${M2_HOME}
  
 M2_LOCAL_REPO="${ROOT_FOLDER}/.m2"
-mkdir -p "${M2_LOCAL_REPO}/repository"
+#mkdir -p "${M2_LOCAL_REPO}/repository"
  
 cat > ${M2_HOME}/settings.xml <<EOF
  
@@ -22,7 +22,8 @@ cat > ${M2_HOME}/settings.xml <<EOF
 </settings>
  
 EOF
-ls -al
+cat ${M2_HOME}/settings.xml
+find ${M2_HOME}
 
 cd source-repo
 mvn clean package -DskipTests
