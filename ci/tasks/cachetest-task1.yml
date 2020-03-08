@@ -8,7 +8,8 @@ image_resource:
     tag: 3.6.3-jdk-8
 
 inputs:
-- name: demo-repo
+- name: ci-repo
+- name: source-repo
 
 outputs:
 - name: out-repo
@@ -16,7 +17,7 @@ outputs:
 run:
   path: /bin/bash
   args: 
-    - demo-repo/ci/tasks/cachetest-task1
+    - ci-repo/ci/tasks/cachetest-task1
 
 caches:
   - path: .gradle/
