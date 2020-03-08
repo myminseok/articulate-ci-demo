@@ -26,4 +26,16 @@ jobs:
     trigger: true
   - task: task1
     file: ci-repo/ci/tasks/cachetest-task1.yml 
+  - task: task2
+    file: ci-repo/ci/tasks/cachetest-task1.yml 
+
+- name: job2
+  serial: true
+  public: true
+  plan:
+  - get: ci-repo
+  - get: source-repo
+    trigger: true
+  - task: task3
+    file: ci-repo/ci/tasks/cachetest-task1.yml 
 
