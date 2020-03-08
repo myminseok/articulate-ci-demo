@@ -2,8 +2,8 @@ resources:
 - name: demo-repo
   type: git
   source:
-    branch: test
-    uri: git@github.com:myminseok/articulate-ci-demo.git
+    branch: master 
+    uri: git@github.com:myminseok/articulate.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 
