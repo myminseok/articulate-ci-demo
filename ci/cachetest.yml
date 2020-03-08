@@ -11,7 +11,7 @@ resources:
   type: git
   source:
     branch: master
-    uri: git@github.com:myminseok/articulate.git
+    uri: git@github.com:myminseok/simple-boot.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
 
@@ -24,9 +24,9 @@ jobs:
   - get: ci-repo
   - get: source-repo
     trigger: true
-  - task: task1
+  - task: task11
     file: ci-repo/ci/tasks/cachetest-task1.yml 
-  - task: task2
+  - task: task12
     file: ci-repo/ci/tasks/cachetest-task1.yml 
 
 - name: job2
@@ -36,6 +36,6 @@ jobs:
   - get: ci-repo
   - get: source-repo
     trigger: true
-  - task: task3
-    file: ci-repo/ci/tasks/cachetest-task1.yml 
+  - task: task21
+    file: ci-repo/ci/tasks/cachetest-task2.yml 
 

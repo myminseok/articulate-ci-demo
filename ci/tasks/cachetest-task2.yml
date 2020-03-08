@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+    tag: 3.6.3-jdk-8
+
+inputs:
+- name: ci-repo
+- name: source-repo
+
+outputs:
+- name: out-repo
+
+run:
+  path: /bin/bash
+  args: 
+    - ci-repo/ci/tasks/cachetest-task2.yml
+
+caches:
+  - path: .gradle/
+  - path: .m2/
+ 
