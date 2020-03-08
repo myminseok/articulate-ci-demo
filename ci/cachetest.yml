@@ -38,4 +38,5 @@ jobs:
     trigger: true
   - task: task21
     file: ci-repo/ci/tasks/cachetest-task2.yml 
-
+  - task: task22
+    file: ci-repo/ci/tasks/cachetest-task2.yml 
