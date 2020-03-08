@@ -25,5 +25,5 @@ cat > ${M2_HOME}/settings.xml <<EOF
 EOF
 ls -al
 
-cd demo-repo
+cd source-repo
 mvn clean package -DskipTests

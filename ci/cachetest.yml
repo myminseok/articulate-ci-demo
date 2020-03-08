@@ -1,8 +1,16 @@
 resources:
-- name: demo-repo
+- name: ci-repo
   type: git
   source:
-    branch: master 
+    branch: test 
+    uri: git@github.com:myminseok/articulate-ci-demo.git
+    private_key: {{github-private-key}}
+  check_every: 10s # for demo
+
+- name: source-repo
+  type: git
+  source:
+    branch: master
     uri: git@github.com:myminseok/articulate.git
     private_key: {{github-private-key}}
   check_every: 10s # for demo
@@ -13,18 +21,9 @@ jobs:
   serial: true
   public: true
   plan:
-  - get: demo-repo
+  - get: ci-repo
+  - get: source-repo
     trigger: true
   - task: task1
-    file: demo-repo/ci/tasks/cachetest-task1.yml 
+    file: ci-repo/ci/tasks/cachetest-task1.yml 
 
-- name: job2
-  serial: true
-  public: true
-  plan:
-  - get: demo-repo
-    trigger: true  
-    passed:
-      - job1
-  - task: task2 
-    file: demo-repo/ci/tasks/cachetest-task2.yml
