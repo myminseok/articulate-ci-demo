@@ -17,7 +17,7 @@ outputs:
 run:
   path: /bin/bash
   args: 
-    - ci-repo/ci/tasks/cachetest-task2.yml
+    - ci-repo/ci/tasks/cachetest-task2
 
 caches:
   - path: .gradle/
